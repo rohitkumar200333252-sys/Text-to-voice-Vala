@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK AI Voice | Free Text to Speech</title>
+  <meta name="description" content="AK AI Voice - Free online text to speech generator with download and multiple languages.">
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    textarea {
+      width: 90%;
+      max-width: 400px;
+      height: 100px;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #00bcd4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { background: #0097a7; }
+    select {
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+      font-size: 15px;
+    }
+    audio {
+      margin-top: 20px;
+      width: 80%;
+    }
+    .ads {
+      background: #222;
+      padding: 10px;
+      margin: 15px auto;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔊 AK AI Voice</h1>
+  <p>Free Text to Speech Generator – Hindi, English & more!</p>
+
+  <div class="ads">
+    <!-- Google AdSense Code Yahan Daale -->
+    [Your Google Ad Code Here]
+  </div>
+
+  <textarea id="text" placeholder="Yahan apna text likho..."></textarea><br><br>
+
+  <label>🌍 Language:</label>
+  <select id="lang">
+    <option value="hi-in">Hindi (India)</option>
+    <option value="en-us">English (US)</option>
+    <option value="fr-fr">French</option>
+    <option value="es-es">Spanish</option>
+  </select><br><br>
+
+  <button onclick="speak()">🔊 Play</button>
+  <button onclick="downloadVoice()">⬇️ Download</button>
+
+  <audio id="audio" controls></audio>
+
+  <script>
+    const apiKey = "20c8839bf2fd4d00b9a8fbe3979ec3d7"; // <-- Yahan apni VoiceRSS API key daale
+
+    function speak() {
+      const text = document.getElementById('text').value;
+      const lang = document.getElementById('lang').value;
+      if (!text) return alert('Please enter some text!');
+      const url = `https://api.voicerss.org/?key=${apiKey}&hl=${lang}&src=${encodeURIComponent(text)}&f=48khz_16bit_stereo`;
+      document.getElementById('audio').src = url;
+    }
+
+    function downloadVoice() {
+      const text = document.getElementById('text').value;
+      const lang = document.getElementById('lang').value;
+      const url = `https://api.voicerss.org/?key=${apiKey}&hl=${lang}&src=${encodeURIComponent(text)}&f=48khz_16bit_stereo`;
+      fetch(url)
+        .then(res => res.blob())
+        .then(blob => {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'ak-voice.mp3';
+          a.click();
+        })
+        .catch(err => alert('Download failed! Try again.'));
+    }
+  </script>
+</body>
+</html>
